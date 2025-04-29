@@ -10,16 +10,29 @@
 <body>
     <div id="container">
         <div id="menu">
-            <!--Nom jugador, Configuració del joc, rànquing de records-->>    
+            <!--Nom jugador, Configuració del joc, rànquing de records-->   
+            <h1>JocDelPong</h1>
+            <div>
+                <input type="text" id="nomjugador" placeholder="Escriu el teu nom per començar" required>
+                <button>Start</button>
+            </div>
+            <table id="ranking">
+                <tr>
+                    <th>Nom</th>
+                    <th>Puntuació</th>
+                </tr>
+            </table>
         </div> 
-        <div id="display">
-            <h1 class="title">Joc del Pong</h1>
-            <div class="score" id="score-jugador1">0</div>
-            <div class="score" id="score-jugador2">0</div>   
-        </div>  
-        <div id="divjoc">
-            <canvas id="joc" class="canvatable"></canvas>    
-        </div>    
+        <div style="display: none;" id="menujoc">
+            <div id="display">
+                <h1 class="title">Joc del Pong</h1>
+                <div class="score" id="score-jugador1">0</div>
+                <div class="score" id="score-jugador2">0</div>   
+            </div>  
+            <div id="divjoc">
+                <canvas id="joc" class="canvatable"></canvas>    
+            </div>    
+        </div>
             
     </div>
 </body>
