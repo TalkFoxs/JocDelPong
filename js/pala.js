@@ -11,17 +11,26 @@ class Pala extends Rectangle{
         this.puntPosicio.y += y;
     }
     update(key, alcada){
+        
         if(key.DOWN.pressed){
          /********************************* 
          * Tasca. Definir el moviment de la pala
          * en funció de la tecla premuda
         **********************************/
+
+         if((this.alcada-this.puntPosicio.y)<alcada){
+            this.mou(this.puntPosicio.x,this.velocitatY);
+         }       
+
         }
         if(key.UP.pressed){
        /********************************* 
          * Tasca. Definir el moviment de la pala
          * en funció de la tecla premuda
         **********************************/
+       if((this.alcada-this.puntPosicio.y)<alcada){
+        this.mou(this.puntPosicio.x,-this.velocitatY)
+    }
         }
     }
     updateAuto(alcada){
@@ -30,6 +39,7 @@ class Pala extends Rectangle{
          * automàtica en moviment constant 
          * o amb variacions aleatories
         **********************************/
+
 
     }
 
