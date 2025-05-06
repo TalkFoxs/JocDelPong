@@ -11,6 +11,7 @@ class Joc{
          * Pales, bola, etc
         **********************************/
        
+       
 
         //Tecles de control
          //tecles del Joc. Només fem servir up i down
