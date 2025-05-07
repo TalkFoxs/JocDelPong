@@ -30,11 +30,12 @@ class Bola extends Rectangle {
      * canviar el sentit en funció d'on ha xocat i sortir
     **********************************/  
         let xoc = false; 
-        let segmentTrajectoria;
-     /********************************* 
+        let segmentTrajectoria = new Segment(this.puntPosicio, {x: this.puntPosicio.x - this.velocitatx, y: this.puntPosicio.y + this.velocitaty});
+       /********************************* 
      * Tasca. Revisar si xoca amb tots els marges del canva 
     **********************************/ 
-        xoc = revisaXocTop(segmentTrajectoria);
+        xoc = this.revisaXocTop(segmentTrajectoria);
+        xoc = this.revisaXocBot(segmentTrajectoria,altCanva);
         if(!xoc){
               /********************************* 
              * Tasca. Revisar si xoca amb alguna pala i 
@@ -73,16 +74,24 @@ class Bola extends Rectangle {
     **********************************/        
         
         revisaXocTop(segmentTrajectoria){
-            if(segmentTrajectoria.puntB.y <0){
+           if(segmentTrajectoria.puntB.y <0){
                 let exces = (segmentTrajectoria.puntB.y)/this.velocitaty;
                 this.puntPosicio.x = segmentTrajectoria.puntB.x - exces*this.velocitatx;
                 this.puntPosicio.y = 0;
                 this.velocitaty = -this.velocitaty;
                 return true;
             }
-        }
+        } 
        
-        
+        revisaXocBot(segmentTrajectoria,alcada){
+            if(segmentTrajectoria.puntB.y >alcada-this.alcada){
+                 let exces = (segmentTrajectoria.puntB.x)/this.velocitatx;
+                 this.puntPosicio.x = segmentTrajectoria.puntB.x;
+                 this.puntPosicio.y = alcada-this.alcada;
+                 this.velocitaty = -this.velocitaty;
+                 return true;
+             }
+         } 
       
      /********************************* 
      * Tasca. Mètode que utilitza un objecte SEGMENT

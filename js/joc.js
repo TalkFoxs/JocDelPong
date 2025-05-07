@@ -10,7 +10,9 @@ class Joc{
          * Tasca. Crear els elements del joc
          * Pales, bola, etc
         **********************************/
-       
+        this.pala = new Pala(new Punt(5,(this.alcada/2)-25), 10, 50);
+        this.palaPC = new Pala(new Punt(285,(this.alcada/2)-25), 10, 50);
+        this.bola = new Bola(new Punt((this.amplada/2)-5,(this.alcada/2)-5), 10, 10);
        
 
         //Tecles de control
@@ -27,13 +29,31 @@ class Joc{
     }
 
     inicialitza(){
-
         $(document).on("keydown",{joc:this}, function(e){
              /********************************* 
              * Tasca. Indetificar la tecla premuda si és alguna
              * de les definides com a tecla de moviment
              * Actualitzar la propietat pressed a true 
             **********************************/
+            switch (e.keyCode) {
+                case 38:    //up arrow key
+                    joc.key.UP.pressed = true;
+                    break;
+                case 40:    //bottom arrow key
+                    joc.key.DOWN.pressed = true;
+                    break;
+            }
+            joc.pala.update(joc.key, joc.alcada);
+            joc.key.UP.pressed = false;
+            joc.key.DOWN.pressed = false;
+            //  switch (e.keyCode) {
+            //     case 38:    //up arrow key
+            //         joc.pala.update(this.key.UP, this.alcada);
+            //         break;
+            //     case 40:    //bottom arrow key
+            //         joc.pala.update(this.key[DOWN], this.alcada);
+            //         break;
+            // }
            
         });
         $(document).on("keyup", {joc:this}, function(e){
@@ -59,7 +79,9 @@ class Joc{
          * Tasca. Actualitzar les posicions 
          * dels elements del joc
          * al canva: Pales, bola, etc
-        **********************************/      
+        **********************************/    
+        this.bola.update(this.amplada, this.alcada, this.pala, this.palaPC);
+        this.palaPC.updateAuto(this.bola.puntPosicio.y, this.alcada);  
         this.draw();
     }
 
@@ -70,7 +92,11 @@ class Joc{
          * al canva, un cop actualitzades
          * les seves posicions: Pales, bola, etc
         **********************************/  
-        
+        this.pala.colorRectangle = "#f00";
+        this.pala.draw(this.myCtx);
+        this.palaPC.draw(this.myCtx);
+        this.bola.colorRectangle = "#00f";
+        this.bola.draw(this.myCtx);
     }
     //Neteja el canvas
     clearCanvas(){
