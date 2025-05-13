@@ -46,15 +46,7 @@ class Joc{
             joc.pala.update(joc.key, joc.alcada);
             joc.key.UP.pressed = false;
             joc.key.DOWN.pressed = false;
-            //  switch (e.keyCode) {
-            //     case 38:    //up arrow key
-            //         joc.pala.update(this.key.UP, this.alcada);
-            //         break;
-            //     case 40:    //bottom arrow key
-            //         joc.pala.update(this.key[DOWN], this.alcada);
-            //         break;
-            // }
-           
+
         });
         $(document).on("keyup", {joc:this}, function(e){
             /********************************* 

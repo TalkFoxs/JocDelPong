@@ -108,10 +108,11 @@ class Bola extends Rectangle {
 
     revisaXocPales(segmentTrajectoria,palaJugador, palaOrdinador){
         let PuntVora 
+
+        console.log(interseccionsegmentrectangle(segmentTrajectoria));
         
         return PuntVora;
        
-
     }
 
    
