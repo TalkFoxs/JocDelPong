@@ -4,7 +4,8 @@ class Joc{
         this.myCtx = myCtx;
         this.amplada = myCanvas.width;
         this.alcada = myCanvas.height;
-
+        this.palaPoints = 0;
+        this.pcPoints = 0;
         //Elements del joc
         /********************************* 
          * Tasca. Crear els elements del joc
@@ -12,7 +13,7 @@ class Joc{
         **********************************/
         this.pala = new Pala(new Punt(5,(this.alcada/2)-25), 10, 50);
         this.palaPC = new Pala(new Punt(285,(this.alcada/2)-25), 10, 50);
-        this.bola = new Bola(new Punt((this.amplada/2)-5,(this.alcada/2)-5), 10, 10);
+        this.bola = new Bola(new Punt((this.amplada/2)-5,(this.alcada/2)-5), 10, 10, this);
        
 
         //Tecles de control
@@ -38,9 +39,11 @@ class Joc{
             switch (e.keyCode) {
                 case 38:    //up arrow key
                     joc.key.UP.pressed = true;
+                    joc.bola.running = true;
                     break;
                 case 40:    //bottom arrow key
                     joc.key.DOWN.pressed = true;
+                    joc.bola.running = true;
                     break;
             }
             joc.pala.update(joc.key, joc.alcada);
@@ -97,6 +100,14 @@ class Joc{
             this.amplada, this.alcada
         )
     }
-
+    updatePuntuacio(jugador){
+        if(jugador == true){
+            this.palaPoints++;
+        }else{
+            this.pcPoints++;
+        }
+        $("#score-jugador2").text(this.palaPoints);
+        $("#score-jugador1").text(this.pcPoints);
+    }
 
 }
