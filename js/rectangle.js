@@ -37,15 +37,4 @@ class Rectangle {
         this.puntPosicio.y += y;
     }
 
-    interseccionsegmentrectangle(segment){
-        let x = segment.punt1.x;
-        let y = segment.punt1.y;
-        let x2 = segment.punt2.x;
-        let y2 = segment.punt2.y;
-
-
-
-
-    }
-
 }
