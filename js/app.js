@@ -27,9 +27,6 @@ $(function(){
     animacio();
 
 
-const pala = new pala();
-pala.update(1,20);
-
 })
 
 function animacio(){
