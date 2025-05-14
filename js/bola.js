@@ -1,10 +1,12 @@
 class Bola extends Rectangle {
-    constructor(puntPosicio, amplada, alcada) {
-        super(puntPosicio, amplada, alcada);
-        this.velocitatx = 2;
-        this.velocitaty = 2;
-        this.colorCercle = "#eee";
 
+    constructor(puntPosicio, amplada, alcada, joc) {
+        super(puntPosicio, amplada, alcada);       
+        this.joc = joc;
+        this.velocitatx = 2*(Math.random() < 0.5 ? 1 : -1);
+        this.velocitaty = 2*(Math.random() < 0.5 ? 1 : -1);
+        this.colorCercle = "#eee";
+        this.running = false;
     };
     mou(mouX, mouY) {
         this.puntPosicio.x += x;

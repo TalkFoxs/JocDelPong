@@ -19,7 +19,7 @@ $(function(){
      * dels elements del joc
      * al canva: Pales, bola, etc
     **********************************/  
-    animacio();
+    // animacio();
 
 
 })
