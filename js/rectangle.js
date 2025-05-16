@@ -1,27 +1,27 @@
 class Rectangle {
-    constructor(puntPosicio, amplada, alcada){
+    constructor(puntPosicio, amplada, alcada) {
         this.puntPosicio = puntPosicio;
         this.amplada = amplada;
         this.alcada = alcada;
     }
-    set colorRectangle(color){
+    set colorRectangle(color) {
         this.color = color;
     }
     get area() {
         return this.amplada * this.alcada;
     }
-    puntInteriorRectangle(punt){
+    puntInteriorRectangle(punt) {
         return (punt.x >= this.puntPosicio.x &&
             punt.x <= this.puntPosicio.x + this.amplada) &&
             (punt.y >= this.puntPosicio.y &&
-                punt.y<=this.puntPosicio.y+this.alcada);
+                punt.y <= this.puntPosicio.y + this.alcada);
     }
 
-    colisioRectangle(rectangle){
+    colisioRectangle(rectangle) {
         return !(this.puntPosicio.x + this.amplada < rectangle.puntPosicio.x ||
-            this.puntPosicio.x > rectangle.puntPosicio.x + rectangle.amplada||
+            this.puntPosicio.x > rectangle.puntPosicio.x + rectangle.amplada ||
             this.puntPosicio.y + this.alcada < rectangle.puntPosicio.y ||
-            this.puntPosicio.y > rectangle.puntPosicio.y + rectangle.alcada  );
+            this.puntPosicio.y > rectangle.puntPosicio.y + rectangle.alcada);
     }
     draw(ctx) {
         ctx.save();
@@ -31,10 +31,15 @@ class Rectangle {
         ctx.restore();
 
     }
-   
-    mou(x,y){
+
+    mou(x, y) {
         this.puntPosicio.x += x;
         this.puntPosicio.y += y;
     }
+
+    puntInterior(punt) {
+        return (punt.x > this.punt.x && punt.x < this.punt.x + this.amplada) && (punt.y > this.punt.y && punt.y < this.punt.y + this.alcada);
+    }
+
 
 }

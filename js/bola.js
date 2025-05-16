@@ -1,10 +1,10 @@
 class Bola extends Rectangle {
 
     constructor(puntPosicio, amplada, alcada, joc) {
-        super(puntPosicio, amplada, alcada);       
+        super(puntPosicio, amplada, alcada);
         this.joc = joc;
-        this.velocitatx = 2*(Math.random() < 0.5 ? 1 : -1);
-        this.velocitaty = 2*(Math.random() < 0.5 ? 1 : -1);
+        this.velocitatx = 2 * (Math.random() < 0.5 ? 1 : -1);
+        this.velocitaty = 2 * (Math.random() < 0.5 ? 1 : -1);
         this.colorCercle = "#eee";
         this.running = false;
     };
@@ -52,13 +52,22 @@ class Bola extends Rectangle {
                * a dreta, esquerra, a dalt o a baix de la pala 
                * Poder heu de tenir en compte en quina pala s'ha produït el xoc
                **********************************/
-              console.log(xocPala.vora);
+                console.log(xocPala.vora);
                 switch (xocPala.vora) {
                     case "right": //un case per cada situació
                         if (xocPala.pala == "jugador") {
                             this.velocitatx = -this.velocitatx;
                             this.puntPosicio.x = segmentTrajectoria.puntB.x;
-                        }else if (xocPala.pala == "ordinador") {
+                        } else if (xocPala.pala == "ordinador") {
+                            this.velocitatx = -this.velocitatx;
+                            this.puntPosicio.x = segmentTrajectoria.puntB.x;
+                        }
+                        break;
+                    case "left":
+                        if (xocPala.pala == "jugador") {
+                            this.velocitatx = -this.velocitatx;
+                            this.puntPosicio.x = segmentTrajectoria.puntB.x;
+                        } else if (xocPala.pala == "ordinador") {
                             this.velocitatx = -this.velocitatx;
                             this.puntPosicio.x = segmentTrajectoria.puntB.x;
                         }
@@ -115,42 +124,56 @@ class Bola extends Rectangle {
     * -El costat de la pala on s'ha donat la col·lisió
     * -Un identificador de quina pala ha col.lisionat
    **********************************/
+    calculaVora(punt, pala) {
+        let vora = "";
+        const marge = 5;
+
+        if (Math.abs(punt.x + this.amplada - pala.puntPosicio.x) <= marge) {
+            vora = "left";
+        } else if (Math.abs(punt.x - (pala.puntPosicio.x + pala.amplada)) <= marge) {
+            vora = "right";
+        } else if (Math.abs(punt.y + this.alcada - pala.puntPosicio.y) <= marge) {
+            vora = "top";
+        } else if (Math.abs(punt.y - (pala.puntPosicio.y + pala.alcada)) <= marge) {
+            vora = "bottom";
+        }
+
+        return vora;
+    }
 
     revisaXocPales(segmentTrajectoria, palaJugador, palaOrdinador) {
-        let PuntVora
-
         let xocB = segmentTrajectoria.puntB;
 
         function tocaPala(punt, pala) {
-            if (punt.x >= pala.puntPosicio.x && punt.x <= pala.puntPosicio.x + pala.amplada &&
-                punt.y >= pala.puntPosicio.y && punt.y <= pala.puntPosicio.y + pala.alcada) {
-                return true;
-            }
-            return false;
+            return (
+                punt.x + this.amplada > pala.puntPosicio.x &&
+                punt.x < pala.puntPosicio.x + pala.amplada &&
+                punt.y + this.alcada > pala.puntPosicio.y &&
+                punt.y < pala.puntPosicio.y + pala.alcada
+            );
         }
 
+        let toca = tocaPala.bind(this);
 
-
-        console.log(tocaPala(xocB, palaOrdinador));
-
-
-        if (tocaPala(xocB, palaJugador)) {
-            let vora = "";
-            if (xocB.x <= palaJugador.puntPosicio.x + this.amplada/2) vora = "left";
-            else if (xocB.x >= palaJugador.puntPosicio.x + palaJugador.amplada) vora = "right";
-            else if (xocB.y + this.alcada <= palaJugador.puntPosicio.y + 5) vora = "top";
-
-            PuntVora = {
+        if (toca(xocB, palaJugador)) {
+            let vora = this.calculaVora(xocB, palaJugador);
+            return {
                 punt: xocB,
                 vora: vora,
                 pala: "jugador"
-            }
-        } else if (tocaPala(xocB, palaOrdinador)) {
-
+            };
         }
 
-        return PuntVora;
+        if (toca(xocB, palaOrdinador)) {
+            let vora = this.calculaVora(xocB, palaOrdinador);
+            return {
+                punt: xocB,
+                vora: vora,
+                pala: "ordinador"
+            };
+        }
 
+        return null;
     }
 
 
