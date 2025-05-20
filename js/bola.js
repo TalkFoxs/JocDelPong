@@ -3,8 +3,9 @@ class Bola extends Rectangle {
     constructor(puntPosicio, amplada, alcada, joc) {
         super(puntPosicio, amplada, alcada);
         this.joc = joc;
-        this.velocitatx = 2 * (Math.random() < 0.5 ? 1 : -1);
-        this.velocitaty = 2 * (Math.random() < 0.5 ? 1 : -1);
+        this.velocitat = 10;
+        this.velocitatx = this.velocitat * (Math.random() < 0.5 ? 1 : -1);
+        this.velocitaty = this.velocitat * (Math.random() < 0.5 ? 1 : -1);
         this.colorCercle = "#eee";
         this.running = false;
     };
@@ -31,57 +32,81 @@ class Bola extends Rectangle {
          * a dreta, esquerra, a dalt o a baix de la pala
          * canviar el sentit en funció d'on ha xocat i sortir
         **********************************/
-        let xoc = false;
-        let segmentTrajectoria = new Segment(this.puntPosicio, { x: this.puntPosicio.x - this.velocitatx, y: this.puntPosicio.y - this.velocitaty });
-        /********************************* 
-      * Tasca. Revisar si xoca amb tots els marges del canva 
-     **********************************/
-        xoc = this.revisaXocTop(segmentTrajectoria);
-        xoc = this.revisaXocBot(segmentTrajectoria, altCanva);
-        if (!xoc) {
+        if(this.running){
+            let xoc = false; 
+            let segmentTrajectoria = new Segment(this.puntPosicio, {x: this.puntPosicio.x + this.velocitatx, y: this.puntPosicio.y + this.velocitaty});
             /********************************* 
-           * Tasca. Revisar si xoca amb alguna pala i 
-           * en quina vora de la pala xoca 
-              **********************************/
-            let xocPala = this.revisaXocPales(segmentTrajectoria, palaJugador, palaOrdinador);
-            if (xocPala) {
-                xoc = true;
+             * Tasca. Revisar si xoca amb tots els marges del canva 
+            **********************************/ 
+            xoc = this.revisaXocTop(segmentTrajectoria) || 
+                    this.revisaXocBot(segmentTrajectoria, altCanva) || 
+                    this.revisaXocLeft(segmentTrajectoria, new Punt((ampleCanva / 2) - 5, (altCanva / 2) - 5)) || 
+                    this.revisaXocRight(segmentTrajectoria, new Punt((ampleCanva / 2) - 5, (altCanva / 2) - 5), ampleCanva);
+            if(!xoc){
                 /********************************* 
-                * Tasca. Si xoca amb alguna pala 
-                * canviar el sentit en funció de si ha xocar
-               * a dreta, esquerra, a dalt o a baix de la pala 
-               * Poder heu de tenir en compte en quina pala s'ha produït el xoc
-               **********************************/
-                console.log(xocPala.vora);
-                switch (xocPala.vora) {
-                    case "right": //un case per cada situació
-                        if (xocPala.pala == "jugador") {
-                            this.velocitatx = -this.velocitatx;
-                            this.puntPosicio.x = segmentTrajectoria.puntB.x;
-                        } else if (xocPala.pala == "ordinador") {
-                            this.velocitatx = -this.velocitatx;
-                            this.puntPosicio.x = segmentTrajectoria.puntB.x;
-                        }
-                        break;
-                    case "left":
-                        if (xocPala.pala == "jugador") {
-                            this.velocitatx = -this.velocitatx;
-                            this.puntPosicio.x = segmentTrajectoria.puntB.x;
-                        } else if (xocPala.pala == "ordinador") {
-                            this.velocitatx = -this.velocitatx;
-                            this.puntPosicio.x = segmentTrajectoria.puntB.x;
-                        }
-                        break;
+                 * Tasca. Revisar si xoca amb alguna pala i 
+                 * en quina vora de la pala xoca 
+                    **********************************/ 
+                let xocPala = this.revisaXocPales(segmentTrajectoria,palaJugador, palaOrdinador);
+                if(xocPala){
+                    xoc = true;
+                    /********************************* 
+                     * Tasca. Si xoca amb alguna pala 
+                     * canviar el sentit en funció de si ha xocar
+                    * a dreta, esquerra, a dalt o a baix de la pala 
+                    * Poder heu de tenir en compte en quina pala s'ha produït el xoc
+                    **********************************/ 
+                    console.log(xocPala.vora);
+                    switch (xocPala.vora) {
+                        case "right": //un case per cada situació
+                            if (xocPala.pala == "jugador") {
+                                this.velocitatx = -this.velocitatx;
+                                this.puntPosicio.x = segmentTrajectoria.puntB.x;
+                            } else if (xocPala.pala == "ordinador") {
+                                this.velocitatx = -this.velocitatx;
+                                this.puntPosicio.x = segmentTrajectoria.puntB.x;
+                            }
+                            break;
+                        case "left":
+                            if (xocPala.pala == "jugador") {
+                                this.velocitatx = -this.velocitatx;
+                                this.puntPosicio.x = segmentTrajectoria.puntB.x;
+                            } else if (xocPala.pala == "ordinador") {
+                                this.velocitatx = -this.velocitatx;
+                                this.puntPosicio.x = segmentTrajectoria.puntB.x;
+                            }
+                            break;
+                        case "bottom":
+                            if (xocPala.pala == "jugador") {
+                                this.velocitaty = -this.velocitaty;
+                                this.puntPosicio.y = segmentTrajectoria.puntB.y;
+                            } else if (xocPala.pala == "ordinador") {
+                                this.velocitaty = -this.velocitaty;
+                                this.puntPosicio.y = segmentTrajectoria.puntB.y;
+                            }
+                            break;
+                        case "top":
+                            if (xocPala.pala == "jugador") {
+                                this.velocitaty = -this.velocitaty;
+                                this.puntPosicio.y = segmentTrajectoria.puntB.y;
+                            } else if (xocPala.pala == "ordinador") {
+                                this.velocitaty = -this.velocitaty;
+                                this.puntPosicio.y = segmentTrajectoria.puntB.y;
+                            }
+                            break;
+                    }  
                 }
             }
-        }
-        if (!xoc) {
-            //Si no hi ha xoc és mou on pertoca
-            this.puntPosicio.x = segmentTrajectoria.puntB.x;
-            this.puntPosicio.y = segmentTrajectoria.puntB.y;
+            if(!xoc){
+                //Si no hi ha xoc és mou on pertoca
+                this.puntPosicio.x = segmentTrajectoria.puntB.x;
+                this.puntPosicio.y = segmentTrajectoria.puntB.y;
+            }
+        }else{
+            this.velocitatx = 2*(Math.random() < 0.5 ? 1 : -1);
+            this.velocitaty = 2*(Math.random() < 0.5 ? 1 : -1);
         }
     }
-
     /********************************* 
      * Tasca. Mètode que utilitza un objecte SEGMENT
      * i identifica si hi ha un xoc amb alguna de les
@@ -112,6 +137,24 @@ class Bola extends Rectangle {
         }
     }
 
+    revisaXocLeft(segmentTrajectoria,start){
+        if(segmentTrajectoria.puntB.x < 0){
+            this.puntPosicio.x = start.x;
+            this.puntPosicio.y = start.y;
+            this.joc.updatePuntuacio(true);
+            this.running = false;
+            return true;
+        }
+    } 
+    revisaXocRight(segmentTrajectoria,start,amplada){
+        if(segmentTrajectoria.puntB.x > amplada-this.amplada){
+            this.puntPosicio.x = start.x;
+            this.puntPosicio.y = start.y;
+            this.joc.updatePuntuacio(false);
+            this.running = false;
+            return true;
+        }
+    } 
     /********************************* 
     * Tasca. Mètode que utilitza un objecte SEGMENT
     * i el seu mètode INTERSECCIOSEGMENTRECTANGLE per determinar
@@ -176,5 +219,7 @@ class Bola extends Rectangle {
         return null;
     }
 
-
+    setVelocitat(x) {
+        this.velocitat = x;
+    }
 }
