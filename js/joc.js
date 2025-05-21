@@ -14,7 +14,7 @@ class Joc{
         this.pala = new Pala(new Punt(5,(this.alcada/2)-25), 10, 50);
         this.palaPC = new Pala(new Punt(285,(this.alcada/2)-25), 10, 50);
         this.bola = new Bola(new Punt((this.amplada/2)-5,(this.alcada/2)-5), 10, 10, this);
-       
+        
 
         //Tecles de control
          //tecles del Joc. Només fem servir up i down
