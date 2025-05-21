@@ -14,7 +14,7 @@ class Joc{
         this.pala = new Pala(new Punt(5,(this.alcada/2)-25), 10, 50);
         this.palaPC = new Pala(new Punt(285,(this.alcada/2)-25), 10, 50);
         this.bola = new Bola(new Punt((this.amplada/2)-5,(this.alcada/2)-5), 10, 10, this);
-        
+        this.palaPC.setVelocitat(0.2);
 
         //Tecles de control
          //tecles del Joc. Només fem servir up i down
@@ -76,7 +76,7 @@ class Joc{
          * al canva: Pales, bola, etc
         **********************************/    
         this.bola.update(this.amplada, this.alcada, this.pala, this.palaPC);
-        this.palaPC.updateAuto(this.bola.puntPosicio.y, this.alcada);  
+        this.palaPC.updateAuto(this.bola, this.palaPC);  
         this.draw();
     }
 

@@ -32,25 +32,24 @@ class Pala extends Rectangle{
             }
         }
     }
-    updateAuto(alcadabola,alcada){
+    updateAuto(_bola,_palaPC){
         /********************************* 
          * Tasca. Definir el moviment de la pala
          * automàtica en moviment constant 
          * o amb variacions aleatories
         **********************************/
-        alcadabola+=5;
-        if(this.puntPosicio.y+(this.alcada/2)!=alcadabola){
-            // console.log(this.puntPosicio.y,alcadabola);
-            if(this.puntPosicio.y-alcadabola>0){
-                if (this.puntPosicio.y-alcadabola>2) {
-                    this.mou(0,-this.velocitatY);
-                }
-            }else{
-                this.mou(0,this.velocitatY);
-            }
-            
-            
+        
+        let puntB = _bola.puntPosicio.y+_bola.amplada/2;
+        let puntC = _palaPC.puntPosicio.y+_palaPC.alcada/2;
+        if(puntB>puntC){
+            this.mou(0,this.velocitatY);
+        }else{
+            this.mou(0,-this.velocitatY);
         }
     }
-
+    
+    setVelocitat(v){
+        this.velocitatX = v;
+        this.velocitatY = v;
+    }
 }
