@@ -6,7 +6,7 @@ class Display{
     }
 
     setPuntuacio(jugador){
-        if(jugador == 0){
+        if(jugador == "jugador"){
             this.puntuacio_jugador++;
             $("score-jugador1").html(this.puntuacio_jugador);
         }else{
@@ -22,6 +22,9 @@ class Display{
         }
     }
 
+    setNomPuntuacio(){
+        $("#ranking").append("<tr><td>"+this.nomjugador+"</td>"+"<td>"+this.puntuacio_jugador+"</td>"+"</tr>");
+    }
 
     
 }

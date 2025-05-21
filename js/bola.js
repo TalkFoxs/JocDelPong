@@ -58,7 +58,7 @@ class Bola extends Rectangle {
                     **********************************/ 
                     console.log(xocPala.vora);
                     switch (xocPala.vora) {
-                        case "right": //un case per cada situació
+                        case "right":
                             if (xocPala.pala == "jugador") {
                                 this.velocitatx = -this.velocitatx;
                                 this.puntPosicio.x = segmentTrajectoria.puntB.x;
