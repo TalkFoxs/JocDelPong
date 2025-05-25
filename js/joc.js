@@ -6,6 +6,7 @@ class Joc {
         this.alcada = myCanvas.height;
         this.palaPoints = 0;
         this.pcPoints = 0;
+        this.acabat = false;
         //Elements del joc
         /********************************* 
          * Tasca. Crear els elements del joc
@@ -25,9 +26,8 @@ class Joc {
             DOWN: { code: 40, pressed: false },
             UP: { code: 38, pressed: false }
         }
-    }
-    set velocitat(velocitatJoc) {
-        this.velocitatJoc = velocitatJoc;
+
+        this.bola.setVelocitat($("#dificultat").find(":selected").val());
     }
 
     inicialitza() {
@@ -38,19 +38,15 @@ class Joc {
             * Actualitzar la propietat pressed a true 
            **********************************/
             switch (e.keyCode) {
-                case 38:    //up arrow key
+                case 38:
                     joc.key.UP.pressed = true;
                     joc.bola.running = true;
                     break;
-                case 40:    //bottom arrow key
+                case 40:
                     joc.key.DOWN.pressed = true;
                     joc.bola.running = true;
                     break;
             }
-            joc.pala.update(joc.key, joc.alcada);
-            joc.key.UP.pressed = false;
-            joc.key.DOWN.pressed = false;
-
         });
         $(document).on("keyup", { joc: this }, function (e) {
             /********************************* 
@@ -58,7 +54,15 @@ class Joc {
              * si és alguna de les definides com a tecla de moviment
              * Actualitzar la propietat pressed a false
             **********************************/
-
+            const joc = e.data.joc;
+            switch (e.keyCode) {
+                case 38:
+                    joc.key.UP.pressed = false;
+                    break;
+                case 40:
+                    joc.key.DOWN.pressed = false;
+                    break;
+            }
         });
 
         /********************************* 
@@ -66,6 +70,7 @@ class Joc {
          * al canva: Pales, bola, etc
         **********************************/
         //Màtode de crida recursiva per generar l'animació dels objectes
+
         requestAnimationFrame(animacio);
 
     }
@@ -76,8 +81,11 @@ class Joc {
        * dels elements del joc
        * al canva: Pales, bola, etc
       **********************************/
+        if (this.acabat) return;
         this.bola.update(this.amplada, this.alcada, this.pala, this.palaPC);
-        this.palaPC.updateAuto(this.bola.puntPosicio.y, this.alcada);
+        joc.pala.update(joc.key, joc.alcada);
+
+        this.palaPC.updateAuto(this.bola, this.palaPC);
         this.draw();
     }
 
@@ -115,6 +123,7 @@ class Joc {
             this.display.setNomPuntuacio();
             this.palaPoints = 0;
             this.pcPoints = 0;
+            this.bola.setVelocitat($("#dificultat").find(":selected").val());
             $("#score-jugador2").text(this.palaPoints);
             $("#score-jugador1").text(this.pcPoints);
             $("#menujoc").hide();

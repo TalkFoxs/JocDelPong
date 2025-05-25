@@ -3,7 +3,7 @@ class Bola extends Rectangle {
     constructor(puntPosicio, amplada, alcada, joc) {
         super(puntPosicio, amplada, alcada);
         this.joc = joc;
-        this.velocitat = 0.5;
+        this.velocitat = 10;
         this.velocitatx = this.velocitat * (Math.random() < 0.5 ? 1 : -1);
         this.velocitaty = this.velocitat * (Math.random() < 0.5 ? 1 : -1);
         this.colorCercle = "#eee";
@@ -88,10 +88,10 @@ class Bola extends Rectangle {
                         case "top":
                             if (xocPala.pala == "jugador") {
                                 this.velocitaty = -this.velocitaty;
-                                this.puntPosicio.y = -segmentTrajectoria.puntB.y;
+                                this.puntPosicio.y = segmentTrajectoria.puntB.y;
                             } else if (xocPala.pala == "ordinador") {
                                 this.velocitaty = -this.velocitaty;
-                                this.puntPosicio.y = -segmentTrajectoria.puntB.y;
+                                this.puntPosicio.y = segmentTrajectoria.puntB.y;
                             }
                             break;
                     }  
@@ -103,8 +103,8 @@ class Bola extends Rectangle {
                 this.puntPosicio.y = segmentTrajectoria.puntB.y;
             }
         }else{
-            this.velocitatx = this.velocitat*(Math.random() < 0.5 ? 1 : -1);
-            this.velocitaty = this.velocitat*(Math.random() < 0.5 ? 1 : -1);
+            this.velocitatx = 2*(Math.random() < 0.5 ? 1 : -1);
+            this.velocitaty = 2*(Math.random() < 0.5 ? 1 : -1);
         }
     }
     /********************************* 
