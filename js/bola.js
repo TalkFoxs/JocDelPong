@@ -3,12 +3,19 @@ class Bola extends Rectangle {
     constructor(puntPosicio, amplada, alcada, joc) {
         super(puntPosicio, amplada, alcada);
         this.joc = joc;
-        this.velocitat = 10;
+        this.velocitat = 2;
         this.velocitatx = this.velocitat * (Math.random() < 0.5 ? 1 : -1);
         this.velocitaty = this.velocitat * (Math.random() < 0.5 ? 1 : -1);
         this.colorCercle = "#eee";
         this.running = false;
     };
+
+    setVelocitat(x) {
+        this.velocitat = x;
+        this.velocitatx = x * Math.sign(this.velocitatx); 
+        this.velocitaty = x * Math.sign(this.velocitaty);
+    }
+
     mou(mouX, mouY) {
         this.puntPosicio.x += x;
         this.puntPosicio.y += y;
@@ -32,30 +39,30 @@ class Bola extends Rectangle {
          * a dreta, esquerra, a dalt o a baix de la pala
          * canviar el sentit en funció d'on ha xocat i sortir
         **********************************/
-        if(this.running){
-            let xoc = false; 
-            let segmentTrajectoria = new Segment(this.puntPosicio, {x: this.puntPosicio.x + this.velocitatx, y: this.puntPosicio.y + this.velocitaty});
+        if (this.running) {
+            let xoc = false;
+            let segmentTrajectoria = new Segment(this.puntPosicio, { x: this.puntPosicio.x + this.velocitatx, y: this.puntPosicio.y + this.velocitaty });
             /********************************* 
              * Tasca. Revisar si xoca amb tots els marges del canva 
-            **********************************/ 
-            xoc = this.revisaXocTop(segmentTrajectoria) || 
-                    this.revisaXocBot(segmentTrajectoria, altCanva) || 
-                    this.revisaXocLeft(segmentTrajectoria, new Punt((ampleCanva / 2) - 5, (altCanva / 2) - 5)) || 
-                    this.revisaXocRight(segmentTrajectoria, new Punt((ampleCanva / 2) - 5, (altCanva / 2) - 5), ampleCanva);
-            if(!xoc){
+            **********************************/
+            xoc = this.revisaXocTop(segmentTrajectoria) ||
+                this.revisaXocBot(segmentTrajectoria, altCanva) ||
+                this.revisaXocLeft(segmentTrajectoria, new Punt((ampleCanva / 2) - 5, (altCanva / 2) - 5)) ||
+                this.revisaXocRight(segmentTrajectoria, new Punt((ampleCanva / 2) - 5, (altCanva / 2) - 5), ampleCanva);
+            if (!xoc) {
                 /********************************* 
                  * Tasca. Revisar si xoca amb alguna pala i 
                  * en quina vora de la pala xoca 
-                    **********************************/ 
-                let xocPala = this.revisaXocPales(segmentTrajectoria,palaJugador, palaOrdinador);
-                if(xocPala){
+                    **********************************/
+                let xocPala = this.revisaXocPales(segmentTrajectoria, palaJugador, palaOrdinador);
+                if (xocPala) {
                     xoc = true;
                     /********************************* 
                      * Tasca. Si xoca amb alguna pala 
                      * canviar el sentit en funció de si ha xocar
                     * a dreta, esquerra, a dalt o a baix de la pala 
                     * Poder heu de tenir en compte en quina pala s'ha produït el xoc
-                    **********************************/ 
+                    **********************************/
                     console.log(xocPala.vora);
                     switch (xocPala.vora) {
                         case "right":
@@ -94,17 +101,17 @@ class Bola extends Rectangle {
                                 this.puntPosicio.y = segmentTrajectoria.puntB.y;
                             }
                             break;
-                    }  
+                    }
                 }
             }
-            if(!xoc){
+            if (!xoc) {
                 //Si no hi ha xoc és mou on pertoca
                 this.puntPosicio.x = segmentTrajectoria.puntB.x;
                 this.puntPosicio.y = segmentTrajectoria.puntB.y;
             }
-        }else{
-            this.velocitatx = 2*(Math.random() < 0.5 ? 1 : -1);
-            this.velocitaty = 2*(Math.random() < 0.5 ? 1 : -1);
+        } else {
+            this.velocitatx = this.velocitat * (Math.random() < 0.5 ? 1 : -1);
+            this.velocitaty = this.velocitat * (Math.random() < 0.5 ? 1 : -1);
         }
     }
     /********************************* 
@@ -137,8 +144,8 @@ class Bola extends Rectangle {
         }
     }
 
-    revisaXocLeft(segmentTrajectoria,start){
-        if(segmentTrajectoria.puntB.x < 0){
+    revisaXocLeft(segmentTrajectoria, start) {
+        if (segmentTrajectoria.puntB.x < 0) {
             this.puntPosicio.x = start.x;
             this.puntPosicio.y = start.y;
             this.joc.pala.reset();
@@ -147,9 +154,9 @@ class Bola extends Rectangle {
             this.running = false;
             return true;
         }
-    } 
-    revisaXocRight(segmentTrajectoria,start,amplada){
-        if(segmentTrajectoria.puntB.x > amplada-this.amplada){
+    }
+    revisaXocRight(segmentTrajectoria, start, amplada) {
+        if (segmentTrajectoria.puntB.x > amplada - this.amplada) {
             this.puntPosicio.x = start.x;
             this.puntPosicio.y = start.y;
             this.joc.pala.reset();
@@ -158,7 +165,7 @@ class Bola extends Rectangle {
             this.running = false;
             return true;
         }
-    } 
+    }
     /********************************* 
     * Tasca. Mètode que utilitza un objecte SEGMENT
     * i el seu mètode INTERSECCIOSEGMENTRECTANGLE per determinar
@@ -221,9 +228,5 @@ class Bola extends Rectangle {
         }
 
         return null;
-    }
-
-    setVelocitat(x) {
-        this.velocitat = x;
     }
 }

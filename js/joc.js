@@ -7,6 +7,8 @@ class Joc {
         this.palaPoints = 0;
         this.pcPoints = 0;
         this.acabat = false;
+        this.raking = [];
+
         //Elements del joc
         /********************************* 
          * Tasca. Crear els elements del joc
@@ -81,7 +83,9 @@ class Joc {
        * dels elements del joc
        * al canva: Pales, bola, etc
       **********************************/
-        if (this.acabat) return;
+        
+        if(this.acabat === true) return;
+
         this.bola.update(this.amplada, this.alcada, this.pala, this.palaPC);
         this.pala.update(joc.key, joc.alcada);
         this.palaPC.updateAuto(this.bola, this.palaPC);
@@ -118,13 +122,13 @@ class Joc {
         }
         $("#score-jugador2").text(this.palaPoints);
         $("#score-jugador1").text(this.pcPoints);
-        console.log(this.velocitatJoc);
 
-        if (this.palaPoints == 1) {
+        if (this.palaPoints == 3) {
+
+            this.acabat = true;
             this.display.setNomPuntuacio();
             this.palaPoints = 0;
             this.pcPoints = 0;
-            this.bola.setVelocitat($("#dificultat").find(":selected").val());
             $("#score-jugador2").text(this.palaPoints);
             $("#score-jugador1").text(this.pcPoints);
             $("#menujoc").hide();

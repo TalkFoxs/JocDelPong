@@ -22,9 +22,5 @@ class Display{
         }
     }
 
-    setNomPuntuacio(){
-        $("#ranking").append("<tr><td>"+this.nomjugador+"</td>"+"<td>"+this.puntuacio_jugador+"</td>"+"</tr>");
-    }
-
     
 }

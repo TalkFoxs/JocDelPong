@@ -37,13 +37,11 @@ class Pala extends Rectangle {
         const zonaMort = 30;
         const maxVelocitat = this.velocitatY;
 
-        // Calcular la diferencia entre la posició de la bola i la pala
         const posBola = _bola.puntPosicio.y + _bola.alcada / 2;
         const posPala = this.puntPosicio.y + this.alcada / 2;
 
         const diferència = posBola - posPala;
 
-        // Si la distancia esta dentro de la zona mort pues no se mueve
         if (Math.abs(diferència) <= zonaMort) {
             return;
         }
