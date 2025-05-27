@@ -4,6 +4,7 @@ class Pala extends Rectangle {
         this.velocitatX = 2;
         this.velocitatY = 2;
         this.colorRectangle = "#fff";
+        this.startingPos = { x: puntPosicio.x, y: puntPosicio.y };
     }
     mou(x, y) {
         this.puntPosicio.x += x;
@@ -54,7 +55,10 @@ class Pala extends Rectangle {
 
         this.mou(0, velocitatObjectiu);
     }
-
+    reset(){
+        this.puntPosicio.x = this.startingPos.x;
+        this.puntPosicio.y = this.startingPos.y;
+    }
 
     setVelocitat(v) {
         this.velocitatX = v;

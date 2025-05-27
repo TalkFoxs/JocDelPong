@@ -141,6 +141,8 @@ class Bola extends Rectangle {
         if(segmentTrajectoria.puntB.x < 0){
             this.puntPosicio.x = start.x;
             this.puntPosicio.y = start.y;
+            this.joc.pala.reset();
+            this.joc.palaPC.reset();
             this.joc.updatePuntuacio(true);
             this.running = false;
             return true;
@@ -150,6 +152,8 @@ class Bola extends Rectangle {
         if(segmentTrajectoria.puntB.x > amplada-this.amplada){
             this.puntPosicio.x = start.x;
             this.puntPosicio.y = start.y;
+            this.joc.pala.reset();
+            this.joc.palaPC.reset();
             this.joc.updatePuntuacio(false);
             this.running = false;
             return true;
