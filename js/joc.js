@@ -8,6 +8,7 @@ class Joc {
         this.pcPoints = 0;
         this.acabat = false;
         this.raking = [];
+        this.display = new Display();
 
         //Elements del joc
         /********************************* 
@@ -18,7 +19,7 @@ class Joc {
         this.palaPC = new Pala(new Punt(285, (this.alcada / 2) - 25), 10, 50);
         this.bola = new Bola(new Punt((this.amplada / 2) - 5, (this.alcada / 2) - 5), 10, 10, this);
 
-        this.display = new Display($("#nomjugador").val());
+
 
         //Tecles de control
         //tecles del Joc. Només fem servir up i down
@@ -83,8 +84,8 @@ class Joc {
        * dels elements del joc
        * al canva: Pales, bola, etc
       **********************************/
-        
-        if(this.acabat === true) return;
+
+        if (this.acabat === true) return;
 
         this.bola.update(this.amplada, this.alcada, this.pala, this.palaPC);
         joc.pala.update(joc.key, joc.alcada);
@@ -122,17 +123,59 @@ class Joc {
         $("#score-jugador2").text(this.palaPoints);
         $("#score-jugador1").text(this.pcPoints);
 
-        if (this.palaPoints == 3) {
-
-            this.acabat = true;
-            this.display.setNomPuntuacio();
-            this.palaPoints = 0;
-            this.pcPoints = 0;
-            $("#score-jugador2").text(this.palaPoints);
-            $("#score-jugador1").text(this.pcPoints);
-            $("#menujoc").hide();
-            $("#menu").show();
+        if (this.palaPoints == 1) {
+            this.jocAcabat();
         }
     }
 
+
+    /*********************************
+     * Tasca. Afegir un jugador al raking
+     * **********************************/
+    afegirJugador(jugador) {
+        this.raking.push(jugador);
+        this.raking.sort((a, b) => b.puntuacio_jugador - a.puntuacio_jugador);
+        if (this.raking.length > 10) {
+            this.raking.pop();
+        }
+        this.mostrarRanking(this.raking);
+    };
+
+
+    /*******    
+     * Tasca joc acabat
+     */
+
+    jocAcabat() {
+        this.acabat = true;
+        this.display.setPuntuacio($("#nomjugador").val(), this.pcPoints);
+        this.display.mostrarRanking(this.display.obtenirRanking());
+
+        console.log(this.display);
+        this.palaPoints = 0;
+        this.pcPoints = 0;
+        $("#score-jugador2").text(this.palaPoints);
+        $("#score-jugador1").text(this.pcPoints);
+        $("#menujoc").hide();
+        $("#menu").show();
+         $("#configuracion").show();
+    }
+
+    /**Mostrar raking */
+    mostrarRanking(ranking) {
+        const table = document.getElementById("ranking");
+        console.log(this.raking);
+        table.querySelectorAll("tr:not(:first-child)").forEach(tr => tr.remove());
+
+        ranking.forEach(jugador => {
+            const fila = document.createElement("tr");
+            const nomTd = document.createElement("td");
+            nomTd.textContent = jugador.nomjugador;
+            const puntuacioTd = document.createElement("td");
+            puntuacioTd.textContent = jugador.puntuacio_jugador;
+            fila.appendChild(nomTd);
+            fila.appendChild(puntuacioTd);
+            table.appendChild(fila);
+        });
+    }
 }

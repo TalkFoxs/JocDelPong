@@ -1,26 +1,46 @@
-class Display{
-    constructor(nomjugador){
-        this.nomjugador = nomjugador;
-        this.puntuacio_jugador = 0;
-        this.puntuacio_ordinador = 0;
+class Display {
+    constructor() {
+        this.clauLocalStorage = "ranking";
     }
 
-    setPuntuacio(jugador){
-        if(jugador == "jugador"){
-            this.puntuacio_jugador++;
-            $("score-jugador1").html(this.puntuacio_jugador);
-        }else{
-            this.puntuacio_ordinador++;
-            $("score-jugador2").html(this.puntuacio_ordinador);
-        }
-    }
-    getPuntuacio(jugador){
-        if(jugador == 0){
-            return this.puntuacio_jugador;
-        }else{
-            return this.puntuacio_ordinador;
-        }
+    obtenirRanking() {
+        const dades = localStorage.getItem(this.clauLocalStorage);
+        return dades ? JSON.parse(dades) : [];
     }
 
-    
+    guardarRanking(ranking) {
+        localStorage.setItem(this.clauLocalStorage, JSON.stringify(ranking));
+    }
+
+    setPuntuacio(nomjugador, puntuacio) {
+        const ranking = this.obtenirRanking();
+
+        ranking.push({ nomjugador, puntuacio });
+
+        ranking.sort((a, b) => b.puntuacio - a.puntuacio);
+
+        this.guardarRanking(ranking);
+    }
+
+    mostrarRanking() {
+        const ranking = this.obtenirRanking();
+        const table = document.getElementById("ranking");
+
+        table.querySelectorAll("tr:not(:first-child)").forEach(tr => tr.remove());
+
+        ranking.forEach(jugador => {
+            const fila = document.createElement("tr");
+            const nomTd = document.createElement("td");
+            nomTd.textContent = jugador.nomjugador;
+            const puntuacioTd = document.createElement("td");
+            puntuacioTd.textContent = jugador.puntuacio;
+            fila.appendChild(nomTd);
+            fila.appendChild(puntuacioTd);
+            table.appendChild(fila);
+        });
+    }
+
+    reiniciarRanking() {
+        localStorage.removeItem(this.clauLocalStorage);
+    }
 }

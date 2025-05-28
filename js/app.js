@@ -1,8 +1,17 @@
 //Variables i constants globals
 //Main de l'aplicatiu
-var joc;
+let joc = null;
 let animacioId = null;
+const display = new Display();
+const bgMusic = document.getElementById('bgMusic');
+const muteBtn = $('#muteBtn');
+
+let isMuted = false;
+
+
 $(function () {
+    inicialitzarAplicacio();
+    display.mostrarRanking();
     $("#startGame").click(function () {
         if (animacioId !== null) {
             cancelAnimationFrame(animacioId);
@@ -11,12 +20,16 @@ $(function () {
 
         $("#menujoc").show();
         $("#menu").hide();
+        $("#configuracion").hide();
         var myCanvas = $("#joc")[0];
         var myCtx = myCanvas.getContext("2d");
         joc = new Joc(myCanvas, myCtx);
         joc.inicialitza();
     });
-
+    $("#clearRanking").click(function () {
+        localStorage.removeItem("ranking");
+        display.mostrarRanking();
+    });
 
 
 
@@ -26,6 +39,7 @@ $(function () {
      * al canva: Pales, bola, etc
     **********************************/
     // animacio();
+
 
 
 })
@@ -40,4 +54,30 @@ function animacio() {
     if (!joc.acabat) {
         animacioId = requestAnimationFrame(animacio);
     }
+}
+
+function inicialitzarAplicacio() {
+    configurarAudio();
+    configurarEvents();
+    display.mostrarRanking();
+}
+
+function configurarAudio() {
+    bgMusic.volume = 0.3;
+    bgMusic.muted = false;
+    isMuted = false;
+    
+    muteBtn.text('Cilencio');
+    muteBtn.on('click', toggleMute);
+}
+
+function toggleMute() {
+    isMuted = !isMuted;
+    bgMusic.muted = isMuted;
+    muteBtn.text(isMuted ? 'Cancelar Cilencio' : 'Cilencio');
+}
+
+function configurarEvents() {
+    $('#startGame').on('click', iniciarJoc);
+    $('#clearRanking').on('click', netejarRanking);
 }
