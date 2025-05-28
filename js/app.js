@@ -58,7 +58,6 @@ function animacio() {
 
 function inicialitzarAplicacio() {
     configurarAudio();
-    configurarEvents();
     display.mostrarRanking();
 }
 
@@ -77,7 +76,3 @@ function toggleMute() {
     muteBtn.text(isMuted ? 'Cancelar Cilencio' : 'Cilencio');
 }
 
-function configurarEvents() {
-    $('#startGame').on('click', iniciarJoc);
-    $('#clearRanking').on('click', netejarRanking);
-}
