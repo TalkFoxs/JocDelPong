@@ -12,7 +12,7 @@ class Display {
         localStorage.setItem(this.clauLocalStorage, JSON.stringify(ranking));
     }
 
-    setPuntuacio(nomjugador, puntuacio) {
+    setPuntuacio(nomjugador, puntuacio, nivel) {
         const ranking = this.obtenirRanking();
 
         ranking.push({ nomjugador, puntuacio });

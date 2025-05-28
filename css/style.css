@@ -162,7 +162,8 @@ h1 {
     outline: none;
 }
 
-#clearRanking {
+#clearRanking,
+#muteBtn {
     margin-top: 1.5rem;
     padding: 0.8rem 2rem;
     font-size: 1.1rem;
@@ -178,42 +179,15 @@ h1 {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-#clearRanking:hover {
+#clearRanking:hover,
+#muteBtn:hover {
     background-color: #00ccaa;
     box-shadow:
       0 0 12px #00ccaa,
       inset 0 0 12px #00ccaa;
 }
 
-#clearRanking:active {
-    background-color: #009977;
-    box-shadow: none;
-    transform: scale(0.98);
-}
-
-#muteBtn {
-    margin-top: 1rem;
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #000;
-    background-color: #00ffcc;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow:
-      0 0 6px #00ffcc,
-      inset 0 0 6px #00ffcc;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#muteBtn:hover {
-    background-color: #00ccaa;
-    box-shadow:
-      0 0 10px #00ccaa,
-      inset 0 0 10px #00ccaa;
-}
-
+#clearRanking:active,
 #muteBtn:active {
     background-color: #009977;
     box-shadow: none;
