@@ -88,9 +88,10 @@ class Joc {
         if (this.acabat === true) return;
 
         this.bola.update(this.amplada, this.alcada, this.pala, this.palaPC);
-        joc.pala.update(joc.key, joc.alcada);
-
+        this.pala.update(joc.key, joc.alcada);
         this.palaPC.updateAuto(this.bola, this.palaPC);
+        // console.log(this.pala.puntPosicio,this.palaPC.puntPosicio)
+
         this.draw();
     }
 
