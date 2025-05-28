@@ -34,25 +34,30 @@ class Pala extends Rectangle {
         }
     }
     updateAuto(_bola, _palaPC) {
-        const zonaMort = 30;
-        const maxVelocitat = this.velocitatY;
+    const zonaMort = 20;
+    const maxVelocitat = this.velocitatY;
 
-        const posBola = _bola.puntPosicio.y + _bola.alcada / 2;
-        const posPala = this.puntPosicio.y + this.alcada / 2;
+    const retardProbabilitat = 0.3;
 
-        const diferència = posBola - posPala;
-
-        if (Math.abs(diferència) <= zonaMort) {
-            return;
-        }
-
-
-        let velocitatObjectiu = diferència * 0.2;
-        if (velocitatObjectiu > maxVelocitat) velocitatObjectiu = maxVelocitat;
-        if (velocitatObjectiu < -maxVelocitat) velocitatObjectiu = -maxVelocitat;
-
-        this.mou(0, velocitatObjectiu);
+    if (Math.random() < retardProbabilitat) {
+        return;
     }
+
+    const posBola = _bola.puntPosicio.y + _bola.alcada / 2;
+    const posPala = this.puntPosicio.y + this.alcada / 2;
+
+    const diferència = posBola - posPala;
+
+    if (Math.abs(diferència) <= zonaMort) return;
+
+    let velocitatObjectiu = diferència * 0.2;
+
+    if (velocitatObjectiu > maxVelocitat) velocitatObjectiu = maxVelocitat;
+    if (velocitatObjectiu < -maxVelocitat) velocitatObjectiu = -maxVelocitat;
+
+    this.mou(0, velocitatObjectiu);
+}
+
     reset(){
         this.puntPosicio.x = this.startingPos.x;
         this.puntPosicio.y = this.startingPos.y;

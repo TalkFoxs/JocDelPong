@@ -15,8 +15,8 @@ class Joc {
          * Tasca. Crear els elements del joc
          * Pales, bola, etc
         **********************************/
-        this.pala = new Pala(new Punt(5, (this.alcada / 2) - 25), 5, 50);
-        this.palaPC = new Pala(new Punt(285, (this.alcada / 2) - 25), 5, 50);
+        this.pala = new Pala(new Punt(5, (this.alcada / 2) - 25), 10, 50);
+        this.palaPC = new Pala(new Punt(285, (this.alcada / 2) - 25), 10, 50);
         this.bola = new Bola(new Punt((this.amplada / 2) - 5, (this.alcada / 2) - 5), 10, 10, this);
 
 
@@ -110,11 +110,10 @@ class Joc {
     }
     //Neteja el canvas
     clearCanvas() {
-        this.myCtx.clearRect(
-            0, 0,
-            this.amplada, this.alcada
-        )
+        this.myCtx.fillStyle = 'rgba(0, 0, 0, 0.2)';  
+        this.myCtx.fillRect(0, 0, this.amplada, this.alcada);
     }
+
     updatePuntuacio(jugador) {
         if (jugador == true) {
             this.palaPoints++;
@@ -124,7 +123,7 @@ class Joc {
         $("#score-jugador2").text(this.palaPoints);
         $("#score-jugador1").text(this.pcPoints);
 
-        if (this.palaPoints == 1) {
+        if (this.palaPoints == 5) {
             this.jocAcabat();
         }
     }
@@ -159,10 +158,9 @@ class Joc {
         $("#score-jugador1").text(this.pcPoints);
         $("#menujoc").hide();
         $("#menu").show();
-         $("#configuracion").show();
+        $("#configuracion").show();
     }
 
-    /**Mostrar raking */
     mostrarRanking(ranking) {
         const table = document.getElementById("ranking");
         console.log(this.raking);

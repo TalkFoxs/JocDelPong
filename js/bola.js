@@ -12,7 +12,7 @@ class Bola extends Rectangle {
 
     setVelocitat(x) {
         this.velocitat = x;
-        this.velocitatx = x * Math.sign(this.velocitatx); 
+        this.velocitatx = x * Math.sign(this.velocitatx);
         this.velocitaty = x * Math.sign(this.velocitaty);
     }
 
@@ -64,41 +64,33 @@ class Bola extends Rectangle {
                     * Poder heu de tenir en compte en quina pala s'ha produït el xoc
                     **********************************/
                     console.log(xocPala.vora);
+
                     switch (xocPala.vora) {
                         case "right":
-                            if (xocPala.pala == "jugador") {
-                                this.velocitatx = -this.velocitatx;
-                                this.puntPosicio.x = segmentTrajectoria.puntB.x;
-                            } else if (xocPala.pala == "ordinador") {
-                                this.velocitatx = -this.velocitatx;
-                                this.puntPosicio.x = segmentTrajectoria.puntB.x;
-                            }
-                            break;
                         case "left":
+                            this.velocitatx = -this.velocitatx;
                             if (xocPala.pala == "jugador") {
-                                this.velocitatx = -this.velocitatx;
-                                this.puntPosicio.x = segmentTrajectoria.puntB.x;
-                            } else if (xocPala.pala == "ordinador") {
-                                this.velocitatx = -this.velocitatx;
-                                this.puntPosicio.x = segmentTrajectoria.puntB.x;
+                                this.puntPosicio.x = palaJugador.puntPosicio.x + palaJugador.amplada + 1;
+                            } else {
+                                this.puntPosicio.x = palaOrdinador.puntPosicio.x - this.amplada - 1;
                             }
                             break;
+
                         case "bottom":
+                            this.velocitaty = -this.velocitaty;
                             if (xocPala.pala == "jugador") {
-                                this.velocitaty = -this.velocitaty;
-                                this.puntPosicio.y = segmentTrajectoria.puntB.y;
-                            } else if (xocPala.pala == "ordinador") {
-                                this.velocitaty = -this.velocitaty;
-                                this.puntPosicio.y = segmentTrajectoria.puntB.y;
+                                this.puntPosicio.y = palaJugador.puntPosicio.y + palaJugador.alcada + 1;
+                            } else {
+                                this.puntPosicio.y = palaOrdinador.puntPosicio.y + palaOrdinador.alcada + 1;
                             }
                             break;
+
                         case "top":
+                            this.velocitaty = -this.velocitaty;
                             if (xocPala.pala == "jugador") {
-                                this.velocitaty = -this.velocitaty;
-                                this.puntPosicio.y = segmentTrajectoria.puntB.y;
-                            } else if (xocPala.pala == "ordinador") {
-                                this.velocitaty = -this.velocitaty;
-                                this.puntPosicio.y = segmentTrajectoria.puntB.y;
+                                this.puntPosicio.y = palaJugador.puntPosicio.y - this.alcada - 1;
+                            } else {
+                                this.puntPosicio.y = palaOrdinador.puntPosicio.y - this.alcada - 1;
                             }
                             break;
                     }
@@ -230,3 +222,7 @@ class Bola extends Rectangle {
         return null;
     }
 }
+
+
+
+
